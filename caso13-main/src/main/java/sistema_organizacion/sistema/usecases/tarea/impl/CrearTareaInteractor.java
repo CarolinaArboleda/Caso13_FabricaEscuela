@@ -1,0 +1,71 @@
+package sistema_organizacion.sistema.usecases.tarea.impl;
+
+import java.util.UUID;
+
+import sistema_organizacion.sistema.entities.JefeDeHogar;
+import sistema_organizacion.sistema.entities.Tarea;
+import sistema_organizacion.sistema.entities.Usuario;
+import sistema_organizacion.sistema.entities.exception.AccesoDenegadoException;
+import sistema_organizacion.sistema.entities.exception.GrupoFamiliarNoEncontradoException;
+import sistema_organizacion.sistema.entities.exception.NombreTareaDuplicadoException;
+import sistema_organizacion.sistema.ports.outs.GrupoFamiliarOutputPort;
+import sistema_organizacion.sistema.ports.outs.TareaOutputPort;
+import sistema_organizacion.sistema.ports.outs.UsuarioOutputPort;
+import sistema_organizacion.sistema.usecases.tarea.CrearTareaCommand;
+import sistema_organizacion.sistema.usecases.tarea.CrearTareaUseCase;
+
+public class CrearTareaInteractor implements CrearTareaUseCase {
+
+    private final UsuarioOutputPort usuarioOutputPort;
+    private final GrupoFamiliarOutputPort grupoOutputPort;
+    private final TareaOutputPort tareaOutputPort;
+
+    public CrearTareaInteractor(UsuarioOutputPort usuarioOutputPort,
+                                 GrupoFamiliarOutputPort grupoOutputPort,
+                                 TareaOutputPort tareaOutputPort) {
+        this.usuarioOutputPort = usuarioOutputPort;
+        this.grupoOutputPort = grupoOutputPort;
+        this.tareaOutputPort = tareaOutputPort;
+    }
+
+    @Override
+    public Tarea ejecutar(CrearTareaCommand command) {
+
+        // Verificar rol ADMIN — orquestación en el Interactor
+        Usuario usuario = usuarioOutputPort
+            .buscarPorId(command.getJefeId())
+            .orElseThrow(AccesoDenegadoException::new);
+
+        if (!(usuario instanceof JefeDeHogar)) {
+            throw new AccesoDenegadoException();
+        }
+
+        // Verificar que el grupo existe
+        grupoOutputPort.buscarPorId(command.getGrupoId())
+            .orElseThrow(() ->
+                new GrupoFamiliarNoEncontradoException(command.getGrupoId()));
+
+        // CA-01-A y CA-01-B HU-11: nombre único en el grupo
+        boolean nombreDuplicado = tareaOutputPort
+            .buscarPorGrupoId(command.getGrupoId())
+            .stream()
+            .anyMatch(t -> t.getTitulo()
+                .equalsIgnoreCase(command.getTitulo()));
+
+        if (nombreDuplicado) {
+            throw new NombreTareaDuplicadoException(command.getTitulo());
+        }
+
+        // Las validaciones de negocio ocurren en el constructor de Tarea
+        // CA-01-C/D/E/F, CA-02-A/B/C, CA-03-A/B, CA-04-A HU-11
+        Tarea tarea = new Tarea(
+            UUID.randomUUID().toString(),
+            command.getTitulo(),
+            command.getDescripcion(),
+            command.getFechaLimite(),
+            command.getGrupoId()
+        );
+
+        return tareaOutputPort.guardar(tarea);
+    }
+}
