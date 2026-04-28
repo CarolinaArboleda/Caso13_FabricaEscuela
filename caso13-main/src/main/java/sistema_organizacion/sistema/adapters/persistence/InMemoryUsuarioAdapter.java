@@ -56,4 +56,10 @@ public class InMemoryUsuarioAdapter implements UsuarioOutputPort {
         return usuarios.values().stream()
             .anyMatch(usuario -> usuario.getRol().getNombreRol() == RolUsuario.ADMIN);
     }
+
+    @Override
+    public Rol buscarRolPorNombre(RolUsuario nombreRol) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'buscarRolPorNombre'");
+    }
 }

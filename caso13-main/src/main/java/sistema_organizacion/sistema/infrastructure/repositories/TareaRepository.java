@@ -8,6 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface TareaRepository extends JpaRepository<Tarea, Long> {
-    List<Tarea> findByGrupoId(Long grupoId);
-    Optional<Tarea> findByIdAndGrupoId(Long id, Long grupoId);
+    List<Tarea> findByGrupo_Id(Long grupoId);
+    Optional<Tarea> findByIdAndGrupo_Id(Long id, Long grupoId);
 }

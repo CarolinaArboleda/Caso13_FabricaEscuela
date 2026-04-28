@@ -76,4 +76,10 @@ public class JpaUsuarioAdapter implements UsuarioOutputPort {
         return usuarioRepository.findAll().stream()
             .anyMatch(usuario -> usuario.getRol().getNombreRol() == RolUsuario.ADMIN);
     }
+
+    @Override
+    public Rol buscarRolPorNombre(RolUsuario nombreRol) {
+        return rolRepository.findByNombreRol(nombreRol)
+            .orElseThrow(() -> new RuntimeException("Rol no encontrado: " + nombreRol));
+}
 }

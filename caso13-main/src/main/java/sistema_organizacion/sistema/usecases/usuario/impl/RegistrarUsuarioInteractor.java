@@ -35,7 +35,7 @@ public class RegistrarUsuarioInteractor implements RegistrarUsuarioUseCase {
                 throw new AdministradorYaExisteException();
             }
             // Validaciones de correo y contraseña ocurren en el constructor
-            Rol rolAdmin = new Rol(null, RolUsuario.ADMIN);
+            Rol rolAdmin = usuarioOutputPort.buscarRolPorNombre(RolUsuario.ADMIN);
             nuevo = new JefeDeHogar(
                 command.getNombre(),
                 command.getApellido(),
@@ -45,7 +45,7 @@ public class RegistrarUsuarioInteractor implements RegistrarUsuarioUseCase {
                 rolAdmin
             );
         } else {
-            Rol rolUsuario = new Rol(null, RolUsuario.USER);
+            Rol rolUsuario = usuarioOutputPort.buscarRolPorNombre(RolUsuario.USER);
             nuevo = new MiembroHogar(
                 command.getNombre(),
                 command.getApellido(),

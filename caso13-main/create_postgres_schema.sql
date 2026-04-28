@@ -68,6 +68,6 @@ CREATE TABLE detalle_tareas (
     observacion text,
     fecha_actualizacion date NOT NULL,
 
-    CONSTRAINT fk_detalle_tarea 
+    CONSTRAINT fk_detalle_tarea
     FOREIGN KEY (id_tarea) REFERENCES tareas (id_tarea)
 );

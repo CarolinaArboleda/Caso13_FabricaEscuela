@@ -29,8 +29,8 @@ public class UsuarioController {
     private final UsuarioPresenter presenter;
 
     public UsuarioController(RegistrarUsuarioUseCase registrarUseCase,
-                              IniciarSesionUseCase iniciarSesionUseCase,
-                              UsuarioPresenter presenter) {
+                                IniciarSesionUseCase iniciarSesionUseCase,
+                                UsuarioPresenter presenter) {
         this.registrarUseCase = registrarUseCase;
         this.iniciarSesionUseCase = iniciarSesionUseCase;
         this.presenter = presenter;
@@ -52,7 +52,7 @@ public class UsuarioController {
         );
         Usuario usuario = registrarUseCase.ejecutar(command);
         return ResponseEntity.status(HttpStatus.CREATED)
-                             .body(presenter.toResponse(usuario));
+                            .body(presenter.toResponse(usuario));
     }
 
     // HU-10: inicio de sesión

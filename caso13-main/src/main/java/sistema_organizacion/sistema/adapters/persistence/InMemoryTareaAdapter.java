@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
+import sistema_organizacion.sistema.entities.Estado;
+import sistema_organizacion.sistema.entities.EstadoTarea;
 import sistema_organizacion.sistema.entities.Tarea;
 import sistema_organizacion.sistema.ports.outs.TareaOutputPort;
 
@@ -34,5 +36,11 @@ public class InMemoryTareaAdapter implements TareaOutputPort {
         return tareas.values().stream()
             .filter(tarea -> tarea.getGrupoId().equals(grupoId))
             .toList();
+    }
+
+    @Override
+    public Estado buscarEstadoPorNombre(EstadoTarea nombreEstado) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'buscarEstadoPorNombre'");
     }
 }

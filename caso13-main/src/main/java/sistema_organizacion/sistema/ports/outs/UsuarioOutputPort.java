@@ -1,11 +1,15 @@
 package sistema_organizacion.sistema.ports.outs;
 
 import java.util.Optional;
+
+import sistema_organizacion.sistema.entities.Rol;
+import sistema_organizacion.sistema.entities.RolUsuario;
 import sistema_organizacion.sistema.entities.Usuario;
 
 public interface UsuarioOutputPort {
     Optional<Usuario> buscarPorId(Long id);
     Optional<Usuario> buscarPorCorreo(String correo);
     Usuario guardar(Usuario usuario);
-    boolean existeAdministrador();   // CA-04-B HU-01
+    boolean existeAdministrador();
+    Rol buscarRolPorNombre(RolUsuario nombreRol);   // CA-04-B HU-01
 }

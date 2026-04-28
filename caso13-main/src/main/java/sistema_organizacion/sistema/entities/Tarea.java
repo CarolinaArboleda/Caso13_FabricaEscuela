@@ -7,7 +7,7 @@ import lombok.*;
 import sistema_organizacion.sistema.entities.exception.TareaInvalidaException;
 @Entity
 @Table(name = "tareas")
-@Getter 
+@Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -48,7 +48,7 @@ public class Tarea {
     @OneToMany(mappedBy = "tarea", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<DetalleTarea> detalles = new ArrayList<>();
     public Tarea(String titulo, String descripcion, LocalDate fechaLimite,
-                 GrupoFamiliar grupo, Estado estado) {
+                    GrupoFamiliar grupo, Estado estado) {
         validarTitulo(titulo);
         validarDescripcion(descripcion);
         validarFechaLimite(fechaLimite);
@@ -59,7 +59,7 @@ public class Tarea {
         this.estado = estado;
     }
     public void actualizar(String nuevoTitulo, String nuevaDescripcion,
-                          LocalDate nuevaFechaLimite) {
+                            LocalDate nuevaFechaLimite) {
         validarTitulo(nuevoTitulo);
         validarDescripcion(nuevaDescripcion);
         validarFechaLimite(nuevaFechaLimite);

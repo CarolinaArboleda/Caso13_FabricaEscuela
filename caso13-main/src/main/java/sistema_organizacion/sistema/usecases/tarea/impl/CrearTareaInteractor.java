@@ -61,7 +61,7 @@ public class CrearTareaInteractor implements CrearTareaUseCase {
         // Las validaciones de negocio ocurren en el constructor de Tarea
         // CA-01-C/D/E/F, CA-02-A/B/C, CA-03-A/B, CA-04-A HU-11
         // Estado inicial: PENDIENTE
-        Estado estadoPendiente = new Estado(null, EstadoTarea.PENDIENTE, LocalDate.now());
+        Estado estadoPendiente = (Estado) tareaOutputPort.buscarEstadoPorNombre(EstadoTarea.PENDIENTE);
         
         Tarea tarea = new Tarea(
             command.getTitulo(),
