@@ -98,4 +98,10 @@ public class Tarea {
             );
         }
     }
+    public Long getGrupoId() {
+        return grupo != null ? grupo.getId() : null;
+    }
+    public Long getMiembroAsignadoId() {
+        return usuario != null ? usuario.getId() : null;
+    }
 }

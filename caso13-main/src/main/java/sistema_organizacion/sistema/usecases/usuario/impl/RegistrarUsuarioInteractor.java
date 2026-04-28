@@ -2,6 +2,7 @@ package sistema_organizacion.sistema.usecases.usuario.impl;
 
 import sistema_organizacion.sistema.entities.JefeDeHogar;
 import sistema_organizacion.sistema.entities.MiembroHogar;
+import sistema_organizacion.sistema.entities.Rol;
 import sistema_organizacion.sistema.entities.RolUsuario;
 import sistema_organizacion.sistema.entities.Usuario;
 import sistema_organizacion.sistema.entities.exception.AdministradorYaExisteException;
@@ -34,22 +35,24 @@ public class RegistrarUsuarioInteractor implements RegistrarUsuarioUseCase {
                 throw new AdministradorYaExisteException();
             }
             // Validaciones de correo y contraseña ocurren en el constructor
+            Rol rolAdmin = new Rol(null, RolUsuario.ADMIN);
             nuevo = new JefeDeHogar(
-                null,
                 command.getNombre(),
                 command.getApellido(),
                 command.getCorreo(),
                 command.getUsername(),
-                command.getContrasena()
+                command.getContrasena(),
+                rolAdmin
             );
         } else {
+            Rol rolUsuario = new Rol(null, RolUsuario.USER);
             nuevo = new MiembroHogar(
-                null,
                 command.getNombre(),
                 command.getApellido(),
                 command.getCorreo(),
                 command.getUsername(),
-                command.getContrasena()
+                command.getContrasena(),
+                rolUsuario
             );
         }
 

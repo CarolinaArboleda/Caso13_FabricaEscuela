@@ -41,7 +41,7 @@ public class IngresarGrupoFamiliarInteractor implements IngresarGrupoFamiliarUse
 
         //  miembro: no puede estar en dos grupos
         // rupo: no puede tener miembros duplicados
-        miembro.asignarGrupo(grupo.getId());
+        miembro.asignarGrupo(grupo);
         grupo.agregarMiembro(miembro);
 
         usuarioOutputPort.guardar(miembro);

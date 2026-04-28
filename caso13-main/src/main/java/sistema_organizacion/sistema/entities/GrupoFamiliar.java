@@ -6,7 +6,7 @@ import lombok.*;
 import sistema_organizacion.sistema.entities.exception.*;
 @Entity
 @Table(name = "grupos")
-@Getter 
+@Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor

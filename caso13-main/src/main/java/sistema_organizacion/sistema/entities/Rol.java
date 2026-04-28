@@ -15,4 +15,8 @@ public class Rol {
     @Column(name = "nombre_rol", unique = true, nullable = false)
     @Enumerated(EnumType.STRING)
     private RolUsuario nombreRol; // ADMIN, USER
+
+    public String name() {
+        return nombreRol != null ? nombreRol.name() : "";
+    }
 }

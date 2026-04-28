@@ -38,10 +38,8 @@ public class CrearGrupoFamiliarInteractor implements CrearGrupoFamiliarUseCase {
         // La validación del nombre ocurre en el constructor de GrupoFamiliar
         // CA-02-A, CA-02-B, CA-02-C HU-02
         GrupoFamiliar grupo = new GrupoFamiliar(
-            null,
             command.getNombre(),
-            codigoUnico,
-            command.getJefeId()
+            codigoUnico
         );
 
         return grupoOutputPort.guardar(grupo);

@@ -10,7 +10,7 @@ import sistema_organizacion.sistema.entities.exception.*;
 @Table(name = "usuarios")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "tipo_usuario", discriminatorType = DiscriminatorType.STRING)
-@Getter 
+@Getter
 @Setter
 @NoArgsConstructor
 public abstract class Usuario {
@@ -50,8 +50,8 @@ public abstract class Usuario {
     // Relación One-to-Many con Tareas (tareas asignadas)
     @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
     private List<Tarea> tareasAsignadas = new ArrayList<>();
-    public Usuario(String nombre, String apellido, String correo, 
-                   String username, String contrasena, Rol rol) {
+    public Usuario(String nombre, String apellido, String correo,
+                    String username, String contrasena, Rol rol) {
         validarCorreo(correo);
         validarContrasena(contrasena);
         this.nombre = nombre;

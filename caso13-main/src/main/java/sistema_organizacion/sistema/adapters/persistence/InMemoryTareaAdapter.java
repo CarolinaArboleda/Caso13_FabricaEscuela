@@ -6,12 +6,10 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.springframework.stereotype.Component;
-
 import sistema_organizacion.sistema.entities.Tarea;
 import sistema_organizacion.sistema.ports.outs.TareaOutputPort;
 
-@Component
+// @Deprecated: Usar JpaTareaAdapter en su lugar
 public class InMemoryTareaAdapter implements TareaOutputPort {
 
     private final Map<Long, Tarea> tareas = new ConcurrentHashMap<>();

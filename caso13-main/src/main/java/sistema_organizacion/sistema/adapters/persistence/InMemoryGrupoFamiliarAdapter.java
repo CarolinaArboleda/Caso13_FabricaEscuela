@@ -5,12 +5,10 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.springframework.stereotype.Component;
-
 import sistema_organizacion.sistema.entities.GrupoFamiliar;
 import sistema_organizacion.sistema.ports.outs.GrupoFamiliarOutputPort;
 
-@Component
+// @Deprecated: Usar JpaGrupoFamiliarAdapter en su lugar
 public class InMemoryGrupoFamiliarAdapter implements GrupoFamiliarOutputPort {
 
     private final Map<Long, GrupoFamiliar> grupos = new ConcurrentHashMap<>();

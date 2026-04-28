@@ -2,6 +2,7 @@ package sistema_organizacion.sistema.adapters.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -34,6 +35,7 @@ public class GrupoFamiliarController {
         this.presenter = presenter;
     }
 
+    @Transactional
     @PostMapping
     public ResponseEntity<GrupoFamiliarResponse> crear(
             @RequestBody CrearGrupoRequest request,
@@ -47,6 +49,7 @@ public class GrupoFamiliarController {
                              .body(presenter.toResponse(grupo));
     }
 
+    @Transactional
     @PostMapping("/ingresar")
     public ResponseEntity<GrupoFamiliarResponse> ingresar(
             @RequestHeader("X-Usuario-Id") Long miembroId,

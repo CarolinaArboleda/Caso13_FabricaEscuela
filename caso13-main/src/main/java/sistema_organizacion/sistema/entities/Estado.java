@@ -20,4 +20,8 @@ public class Estado {
     
     @Column(name = "fecha_actualizacion", nullable = false)
     private LocalDate fechaActualizacion;
+
+    public String name() {
+        return nombreEstado != null ? nombreEstado.name() : "";
+    }
 }

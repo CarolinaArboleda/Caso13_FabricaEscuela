@@ -2,6 +2,7 @@ package sistema_organizacion.sistema.adapters.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import sistema_organizacion.sistema.adapters.dto.request.CrearTareaRequest;
 import sistema_organizacion.sistema.adapters.dto.request.ModificarTareaRequest;
@@ -35,6 +36,7 @@ public class TareaController {
     }
 
     // HU-11: crear tarea
+    @Transactional
     @PostMapping
     public ResponseEntity<TareaResponse> crear(
             @RequestBody CrearTareaRequest request,
@@ -53,6 +55,7 @@ public class TareaController {
     }
 
     // HU-13: modificar tarea
+    @Transactional
     @PutMapping("/{tareaId}")
     public ResponseEntity<ModificarTareaResponse> modificar(
             @PathVariable Long tareaId,

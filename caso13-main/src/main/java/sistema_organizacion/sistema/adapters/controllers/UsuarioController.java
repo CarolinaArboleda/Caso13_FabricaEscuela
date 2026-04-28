@@ -2,6 +2,7 @@ package sistema_organizacion.sistema.adapters.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +37,7 @@ public class UsuarioController {
     }
 
     // HU-01: registro de usuario
+    @Transactional
     @PostMapping("/registro")
     public ResponseEntity<UsuarioResponse> registrar(
             @RequestBody RegistroRequest request) {
