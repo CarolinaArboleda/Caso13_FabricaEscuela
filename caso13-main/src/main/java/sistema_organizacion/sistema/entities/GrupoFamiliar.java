@@ -7,12 +7,29 @@ import java.util.List;
 import sistema_organizacion.sistema.entities.exception.MiembroYaEnGrupoException;
 import sistema_organizacion.sistema.entities.exception.NombreGrupoInvalidoException;
 
+import jakarta.persistence.*;
+import lombok.*;
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "grupos")
+
 public class GrupoFamiliar {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_grupo")
     private Long id;
+    @Column(name = "nombre", nullable = false)
     private String nombre;
+    @Column(name = "codigo_acceso", unique = true)
     private String codigoAcceso;
+    @Transient
     private Long jefeId;
+    @Column(name = "fecha_creacion")
     private LocalDate fechaCreacion;
+    @Transient
     private List<MiembroHogar> miembros;
 
     public GrupoFamiliar(Long id, String nombre,

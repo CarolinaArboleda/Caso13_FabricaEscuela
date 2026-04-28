@@ -2,37 +2,41 @@ package sistema_organizacion.sistema.entities;
 
 import sistema_organizacion.sistema.entities.exception.ContrasenaInvalidaException;
 import sistema_organizacion.sistema.entities.exception.CorreoInvalidoException;
+import jakarta.persistence.*;
+import lombok.*;
+
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "usuarios")
 
 public abstract class Usuario {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_usuario")
     private Long id;
+    @Column(name = "nombre", nullable = false)
     private String nombre;
+    @Column(name = "apellido")
     private String apellido;
+    @Column(name = "correo", unique = true)
     private String correo;
+    @Column(name = "username", unique = true)
     private String username;
+    @Column(name = "contrasena")
     private String contrasena;
+    @ManyToOne
+    @JoinColumn(name = "id_rol", nullable = false)
     private RolUsuario rol;
 
-    public Usuario(Long id, String nombre, String apellido,
-                   String correo, String username,
-                   String contrasena, RolUsuario rol) {
-        validarCorreo(correo);
-        validarContrasena(contrasena);
-        this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.correo = correo;
-        this.username = username;
-        this.contrasena = contrasena;
-        this.rol = rol;
-    }
- //  validar formato del correo
-//    private void validarCorreo(String correo) {
-  //      if (correo == null || !correo.matches("^[a-zA-Z0-9._%+\\-]+@gmail\\.com$")) {
-    //        throw new CorreoInvalidoException(
-      //          "El correo electrónico debe ser una cuenta @gmail.com válida"
-      //      );
-       // }
-    //}
+    @ManyToOne
+    @JoinColumn(name = "id_grupo")
+    private GrupoFamiliar grupo;
+
 
     private void validarCorreo(String correo) {
     System.out.println("=== VALIDANDO CORREO ===");

@@ -5,14 +5,38 @@ import java.util.Arrays;
 
 import sistema_organizacion.sistema.entities.exception.TareaInvalidaException;
 
+import jakarta.persistence.*;
+import lombok.*;
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "tareas")
+
 public class Tarea {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_tarea")
     private Long id;
+    @Column(name = "titulo", nullable = false)
     private String titulo;
+    @Column(name = "descripcion")
     private String descripcion;
+    @Column(name = "fecha_limite")
     private LocalDate fechaLimite;
+    @ManyToMany
+    @JoinColumn(name = "estado_id", nullable = false)
     private EstadoTarea estado;
+    @ManyToMany
+    @JoinColumn(name = "grupo_id")
     private Long grupoId;
+    @ManyToOne
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuario;
+    @Transient
     private Long miembroAsignadoId;
+    @Transient
     private String nombreMiembroAsignado;
 
     public Tarea(Long id, String titulo, String descripcion,
