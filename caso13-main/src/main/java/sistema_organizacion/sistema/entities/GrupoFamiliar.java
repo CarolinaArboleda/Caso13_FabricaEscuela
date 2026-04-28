@@ -1,50 +1,45 @@
 package sistema_organizacion.sistema.entities;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import sistema_organizacion.sistema.entities.exception.MiembroYaEnGrupoException;
-import sistema_organizacion.sistema.entities.exception.NombreGrupoInvalidoException;
-
+import java.util.*;
 import jakarta.persistence.*;
 import lombok.*;
+import sistema_organizacion.sistema.entities.exception.*;
 @Entity
-@Getter
+@Table(name = "grupos")
+@Getter 
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "grupos")
-
 public class GrupoFamiliar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_grupo")
     private Long id;
-    @Column(name = "nombre", nullable = false)
+    
+    @Column(name = "nombre_grupo", nullable = false)
     private String nombre;
-    @Column(name = "codigo_acceso", unique = true)
+    
+    @Column(name = "codigo_acceso", unique = true, nullable = false)
     private String codigoAcceso;
-    @Transient
-    private Long jefeId;
-    @Column(name = "fecha_creacion")
+    
+    @Column(name = "fecha_creacion", nullable = false)
     private LocalDate fechaCreacion;
-    @Transient
-    private List<MiembroHogar> miembros;
-
-    public GrupoFamiliar(Long id, String nombre,
-                    String codigoAcceso, Long jefeId) {
-        // el nombre debe ser válido
+    
+    // Relación uno-a-muchos con Usuarios (miembros del grupo)
+    @OneToMany(mappedBy = "grupo", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Usuario> miembros = new ArrayList<>();
+    
+    // Relación uno-a-muchos con Tareas
+    @OneToMany(mappedBy = "grupo", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Tarea> tareas = new ArrayList<>();
+    public GrupoFamiliar(String nombre, String codigoAcceso) {
         validarNombre(nombre);
-        this.id = id;
         this.nombre = nombre;
         this.codigoAcceso = codigoAcceso;
-        this.jefeId = jefeId;
         this.fechaCreacion = LocalDate.now();
         this.miembros = new ArrayList<>();
+        this.tareas = new ArrayList<>();
     }
-
-    
     private void validarNombre(String nombre) {
         if (nombre == null || nombre.trim().length() < 6
                 || nombre.trim().length() > 25) {
@@ -58,26 +53,16 @@ public class GrupoFamiliar {
             );
         }
     }
-
-    // no puede haber miembros duplicados
-    public void agregarMiembro(MiembroHogar miembro) {
-        boolean yaExiste = miembros.stream()
-            .anyMatch(m -> m.getId().equals(miembro.getId()));
-        if (yaExiste) {
-            throw new MiembroYaEnGrupoException(
-                "El miembro ya pertenece al grupo"
-            );
+    public void agregarMiembro(Usuario miembro) {
+        if (!miembros.contains(miembro)) {
+            miembros.add(miembro);
+            miembro.setGrupo(this);
         }
-        miembros.add(miembro);
     }
-
-    public Long getId()                 { return id; }
-    public String getNombre()           { return nombre; }
-    public String getCodigoAcceso()     { return codigoAcceso; }
-    public Long getJefeId()             { return jefeId; }
-    public LocalDate getFechaCreacion() { return fechaCreacion; }
-    public List<MiembroHogar> getMiembros() {
-        return Collections.unmodifiableList(miembros);
+    public void removerMiembro(Usuario miembro) {
+        if (miembros.contains(miembro)) {
+            miembros.remove(miembro);
+            miembro.setGrupo(null);
+        }
     }
-    public void setId(Long id)          { this.id = id; }
 }

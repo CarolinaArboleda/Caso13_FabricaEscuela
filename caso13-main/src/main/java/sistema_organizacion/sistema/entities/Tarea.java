@@ -1,64 +1,65 @@
 package sistema_organizacion.sistema.entities;
-
 import java.time.LocalDate;
-import java.util.Arrays;
-
-import sistema_organizacion.sistema.entities.exception.TareaInvalidaException;
-
+import java.util.ArrayList;
+import java.util.List;
 import jakarta.persistence.*;
 import lombok.*;
+import sistema_organizacion.sistema.entities.exception.TareaInvalidaException;
 @Entity
-@Getter
+@Table(name = "tareas")
+@Getter 
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "tareas")
-
 public class Tarea {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_tarea")
     private Long id;
-    @Column(name = "titulo", nullable = false)
+    
+    @Column(name = "titulo", nullable = false, length = 255)
     private String titulo;
-    @Column(name = "descripcion")
+    
+    @Column(name = "descripcion", columnDefinition = "TEXT")
     private String descripcion;
-    @Column(name = "fecha_limite")
+    
+    @Column(name = "fecha_limite", nullable = false)
     private LocalDate fechaLimite;
-    @ManyToMany
-    @JoinColumn(name = "estado_id", nullable = false)
-    private EstadoTarea estado;
-    @ManyToMany
-    @JoinColumn(name = "grupo_id")
-    private Long grupoId;
-    @ManyToOne
+    
+    // Relación Many-to-One con Estado
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_estado", nullable = false)
+    private Estado estado;
+    
+    // Relación Many-to-One con GrupoFamiliar
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_grupo", nullable = false)
+    private GrupoFamiliar grupo;
+    
+    // Relación Many-to-One con Usuario (responsable)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
-    @Transient
-    private Long miembroAsignadoId;
-    @Transient
+    
+    @Column(name = "nombre_miembro_asignado")
     private String nombreMiembroAsignado;
-
-    public Tarea(Long id, String titulo, String descripcion,
-            LocalDate fechaLimite, Long grupoId) {
+    
+    // Relación One-to-Many con DetalleTarea
+    @OneToMany(mappedBy = "tarea", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<DetalleTarea> detalles = new ArrayList<>();
+    public Tarea(String titulo, String descripcion, LocalDate fechaLimite,
+                 GrupoFamiliar grupo, Estado estado) {
         validarTitulo(titulo);
         validarDescripcion(descripcion);
         validarFechaLimite(fechaLimite);
-        this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.fechaLimite = fechaLimite;
-        this.grupoId = grupoId;
-        this.estado = EstadoTarea.PENDIENTE;
+        this.grupo = grupo;
+        this.estado = estado;
     }
-
-    // Cambio de estado propio de la entidad
     public void actualizar(String nuevoTitulo, String nuevaDescripcion,
-                            LocalDate nuevaFechaLimite) {
-        if (nuevoTitulo == null || nuevoTitulo.isBlank())
-            throw new TareaInvalidaException("El nombre de la tarea es obligatorio");
-        if (nuevaFechaLimite == null)
-            throw new TareaInvalidaException("La fecha límite es obligatoria");
+                          LocalDate nuevaFechaLimite) {
         validarTitulo(nuevoTitulo);
         validarDescripcion(nuevaDescripcion);
         validarFechaLimite(nuevaFechaLimite);
@@ -66,50 +67,35 @@ public class Tarea {
         this.descripcion = nuevaDescripcion;
         this.fechaLimite = nuevaFechaLimite;
     }
-
-    // Cambio de estado propio
-    public void actualizarEstado(EstadoTarea nuevoEstado) {
+    public void actualizarEstado(Estado nuevoEstado) {
         this.estado = nuevoEstado;
     }
-
-    // Asignación es cambio de estado propio
-    public void asignarMiembro(Long miembroId, String nombreMiembro) {
-        this.miembroAsignadoId = miembroId;
+    public void asignarResponsable(Usuario usuario, String nombreMiembro) {
+        this.usuario = usuario;
         this.nombreMiembroAsignado = nombreMiembro;
     }
-
     private void validarTitulo(String titulo) {
         if (titulo == null || titulo.trim().length() < 3
-                || titulo.trim().length() > 60)
+                || titulo.trim().length() > 60) {
             throw new TareaInvalidaException(
-                "El nombre debe tener entre 3 y 60 caracteres");
-        if (!titulo.matches("[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ0-9 ]+"))
-            throw new TareaInvalidaException(
-                "El nombre solo permite letras, números, espacios, tildes y ñ");
+                "El nombre debe tener entre 3 y 60 caracteres"
+            );
+        }
     }
-
     private void validarDescripcion(String descripcion) {
         if (descripcion == null || descripcion.trim().isEmpty()) return;
-        long palabras = Arrays.stream(
-            descripcion.trim().split("\\s+")).count();
-        if (palabras > 100)
+        long palabras = descripcion.trim().split("\\s+").length;
+        if (palabras > 100) {
             throw new TareaInvalidaException(
-                "La descripción no debe superar las 100 palabras");
+                "La descripción no debe superar 100 palabras"
+            );
+        }
     }
-
     private void validarFechaLimite(LocalDate fecha) {
-        if (fecha == null || !fecha.isAfter(LocalDate.now()))
+        if (fecha == null || !fecha.isAfter(LocalDate.now())) {
             throw new TareaInvalidaException(
-                "La fecha límite no puede estar en el pasado");
+                "La fecha límite no puede estar en el pasado"
+            );
+        }
     }
-
-    public Long getId()                      { return id; }
-    public String getTitulo()                { return titulo; }
-    public String getDescripcion()           { return descripcion; }
-    public LocalDate getFechaLimite()        { return fechaLimite; }
-    public EstadoTarea getEstado()           { return estado; }
-    public Long getGrupoId()                 { return grupoId; }
-    public Long getMiembroAsignadoId()       { return miembroAsignadoId; }
-    public String getNombreMiembroAsignado() { return nombreMiembroAsignado; }
-    public void setId(Long id)               { this.id = id; }
 }

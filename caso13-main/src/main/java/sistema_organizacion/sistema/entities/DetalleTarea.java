@@ -4,26 +4,32 @@ import jakarta.persistence.*;
 import lombok.*;
 @Entity
 @Table(name = "detalle_tareas")
-@Getter
+@Getter 
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class DetalleTarea {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_detalle")
     private Long id;
-
-    @Column(name = "id_tarea", nullable = false)
-    private Long tareaId;
-
-    @Column(name = "descripcion")
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_tarea", nullable = false)
+    private Tarea tarea;
+    
+    @Column(name = "descripcion", columnDefinition = "TEXT")
     private String descripcion;
-
-    @Column(name = "observacion")
+    
+    @Column(name = "observacion", columnDefinition = "TEXT")
     private String observacion;
-
+    
     @Column(name = "fecha_actualizacion", nullable = false)
     private LocalDate fechaActualizacion;
+    public DetalleTarea(Tarea tarea, String descripcion, String observacion) {
+        this.tarea = tarea;
+        this.descripcion = descripcion;
+        this.observacion = observacion;
+        this.fechaActualizacion = LocalDate.now();
+    }
 }
