@@ -1,7 +1,5 @@
 package sistema_organizacion.sistema.usecases.tarea.impl;
 
-import java.util.UUID;
-
 import sistema_organizacion.sistema.entities.JefeDeHogar;
 import sistema_organizacion.sistema.entities.Tarea;
 import sistema_organizacion.sistema.entities.Usuario;
@@ -43,7 +41,7 @@ public class CrearTareaInteractor implements CrearTareaUseCase {
         // Verificar que el grupo existe
         grupoOutputPort.buscarPorId(command.getGrupoId())
             .orElseThrow(() ->
-                new GrupoFamiliarNoEncontradoException(command.getGrupoId()));
+                new GrupoFamiliarNoEncontradoException(command.getGrupoId().toString()));
 
         // CA-01-A y CA-01-B HU-11: nombre único en el grupo
         boolean nombreDuplicado = tareaOutputPort
@@ -59,7 +57,7 @@ public class CrearTareaInteractor implements CrearTareaUseCase {
         // Las validaciones de negocio ocurren en el constructor de Tarea
         // CA-01-C/D/E/F, CA-02-A/B/C, CA-03-A/B, CA-04-A HU-11
         Tarea tarea = new Tarea(
-            UUID.randomUUID().toString(),
+            null,
             command.getTitulo(),
             command.getDescripcion(),
             command.getFechaLimite(),

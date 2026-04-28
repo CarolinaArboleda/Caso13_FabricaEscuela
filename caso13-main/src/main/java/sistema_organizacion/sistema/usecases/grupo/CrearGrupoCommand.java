@@ -2,13 +2,13 @@ package sistema_organizacion.sistema.usecases.grupo;
 
 public class CrearGrupoCommand {
     private final String nombre;
-    private final String jefeId;
+    private final Long jefeId;
 
-    public CrearGrupoCommand(String nombre, String jefeId) {
+    public CrearGrupoCommand(String nombre, Long jefeId) {
         this.nombre = nombre;
         this.jefeId = jefeId;
     }
 
     public String getNombre()  { return nombre; }
-    public String getJefeId()  { return jefeId; }
+    public Long getJefeId()    { return jefeId; }
 }

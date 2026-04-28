@@ -3,6 +3,7 @@ package sistema_organizacion.sistema.adapters.persistence;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.stereotype.Component;
 
@@ -15,19 +16,21 @@ import sistema_organizacion.sistema.ports.outs.UsuarioOutputPort;
 @Component
 public class InMemoryUsuarioAdapter implements UsuarioOutputPort {
 
-    private final Map<String, Usuario> usuarios = new ConcurrentHashMap<>();
+    private final Map<Long, Usuario> usuarios = new ConcurrentHashMap<>();
+    private final AtomicLong idGenerator = new AtomicLong(1);
 
     public InMemoryUsuarioAdapter() {
         guardar(new JefeDeHogar(
-            "jefe-1", "Ana", "Lopez", "usuario@gmail.com", "ana", "1234"
+            1L, "Ana", "Lopez", "usuario@gmail.com", "ana", "1234"
         ));
         guardar(new MiembroHogar(
-            "miembro-1", "Luis", "Perez", "luis@gmail.com", "luis", "1234"
+            2L, "Luis", "Perez", "luis@gmail.com", "luis", "1234"
         ));
+        idGenerator.set(3L);
     }
 
     @Override
-    public Optional<Usuario> buscarPorId(String id) {
+    public Optional<Usuario> buscarPorId(Long id) {
         return Optional.ofNullable(usuarios.get(id));
     }
 
@@ -40,6 +43,16 @@ public class InMemoryUsuarioAdapter implements UsuarioOutputPort {
 
     @Override
     public Usuario guardar(Usuario usuario) {
+        if (usuario.getId() == null) {
+            usuario = new JefeDeHogar(
+                idGenerator.getAndIncrement(),
+                usuario.getNombre(),
+                usuario.getApellido(),
+                usuario.getCorreo(),
+                usuario.getUsername(),
+                usuario.getContrasena()
+            );
+        }
         usuarios.put(usuario.getId(), usuario);
         return usuario;
     }

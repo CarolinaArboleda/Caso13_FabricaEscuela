@@ -6,6 +6,6 @@ import sistema_organizacion.sistema.entities.Tarea;
 
 public interface TareaOutputPort {
     Tarea guardar(Tarea tarea);
-    Optional<Tarea> buscarPorId(String id);
-    List<Tarea> buscarPorGrupoId(String grupoId);
+    Optional<Tarea> buscarPorId(Long id);
+    List<Tarea> buscarPorGrupoId(Long grupoId);
 }

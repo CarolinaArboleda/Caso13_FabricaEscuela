@@ -4,7 +4,7 @@ import sistema_organizacion.sistema.entities.exception.ContrasenaInvalidaExcepti
 import sistema_organizacion.sistema.entities.exception.CorreoInvalidoException;
 
 public abstract class Usuario {
-    private String id;
+    private Long id;
     private String nombre;
     private String apellido;
     private String correo;
@@ -12,7 +12,7 @@ public abstract class Usuario {
     private String contrasena;
     private RolUsuario rol;
 
-    public Usuario(String id, String nombre, String apellido,
+    public Usuario(Long id, String nombre, String apellido,
                    String correo, String username,
                    String contrasena, RolUsuario rol) {
         validarCorreo(correo);
@@ -57,7 +57,7 @@ public abstract class Usuario {
         }
     }
 
-    public String getId()         { return id; }
+    public Long getId()           { return id; }
     public String getNombre()     { return nombre; }
     public String getApellido()   { return apellido; }
     public String getCorreo()     { return correo; }

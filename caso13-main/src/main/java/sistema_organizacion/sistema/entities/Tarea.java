@@ -6,17 +6,17 @@ import java.util.Arrays;
 import sistema_organizacion.sistema.entities.exception.TareaInvalidaException;
 
 public class Tarea {
-    private String id;
+    private Long id;
     private String titulo;
     private String descripcion;
     private LocalDate fechaLimite;
     private EstadoTarea estado;
-    private String grupoId;
-    private String miembroAsignadoId;
+    private Long grupoId;
+    private Long miembroAsignadoId;
     private String nombreMiembroAsignado;
 
-    public Tarea(String id, String titulo, String descripcion,
-                 LocalDate fechaLimite, String grupoId) {
+    public Tarea(Long id, String titulo, String descripcion,
+            LocalDate fechaLimite, Long grupoId) {
         validarTitulo(titulo);
         validarDescripcion(descripcion);
         validarFechaLimite(fechaLimite);
@@ -49,7 +49,7 @@ public class Tarea {
     }
 
     // Asignación es cambio de estado propio
-    public void asignarMiembro(String miembroId, String nombreMiembro) {
+    public void asignarMiembro(Long miembroId, String nombreMiembro) {
         this.miembroAsignadoId = miembroId;
         this.nombreMiembroAsignado = nombreMiembro;
     }
@@ -79,13 +79,13 @@ public class Tarea {
                 "La fecha límite no puede estar en el pasado");
     }
 
-    public String getId()                    { return id; }
+    public Long getId()                      { return id; }
     public String getTitulo()                { return titulo; }
     public String getDescripcion()           { return descripcion; }
     public LocalDate getFechaLimite()        { return fechaLimite; }
     public EstadoTarea getEstado()           { return estado; }
-    public String getGrupoId()               { return grupoId; }
-    public String getMiembroAsignadoId()     { return miembroAsignadoId; }
+    public Long getGrupoId()                 { return grupoId; }
+    public Long getMiembroAsignadoId()       { return miembroAsignadoId; }
     public String getNombreMiembroAsignado() { return nombreMiembroAsignado; }
-    public void setId(String id)             { this.id = id; }
+    public void setId(Long id)               { this.id = id; }
 }

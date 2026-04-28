@@ -2,8 +2,8 @@ package sistema_organizacion.sistema.adapters.persistence;
 
 import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.stereotype.Component;
 
@@ -13,19 +13,20 @@ import sistema_organizacion.sistema.ports.outs.GrupoFamiliarOutputPort;
 @Component
 public class InMemoryGrupoFamiliarAdapter implements GrupoFamiliarOutputPort {
 
-    private final Map<String, GrupoFamiliar> grupos = new ConcurrentHashMap<>();
+    private final Map<Long, GrupoFamiliar> grupos = new ConcurrentHashMap<>();
+    private final AtomicLong idGenerator = new AtomicLong(1);
 
     @Override
     public GrupoFamiliar guardar(GrupoFamiliar grupo) {
-        if (grupo.getId() == null || grupo.getId().isBlank()) {
-            grupo.setId(UUID.randomUUID().toString());
+        if (grupo.getId() == null) {
+            grupo.setId(idGenerator.getAndIncrement());
         }
         grupos.put(grupo.getId(), grupo);
         return grupo;
     }
 
     @Override
-    public Optional<GrupoFamiliar> buscarPorId(String id) {
+    public Optional<GrupoFamiliar> buscarPorId(Long id) {
         return Optional.ofNullable(grupos.get(id));
     }
 

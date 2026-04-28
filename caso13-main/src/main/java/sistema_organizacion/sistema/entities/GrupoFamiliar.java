@@ -8,15 +8,15 @@ import sistema_organizacion.sistema.entities.exception.MiembroYaEnGrupoException
 import sistema_organizacion.sistema.entities.exception.NombreGrupoInvalidoException;
 
 public class GrupoFamiliar {
-    private String id;
+    private Long id;
     private String nombre;
     private String codigoAcceso;
-    private String jefeId;
+    private Long jefeId;
     private LocalDate fechaCreacion;
     private List<MiembroHogar> miembros;
 
-    public GrupoFamiliar(String id, String nombre,
-                         String codigoAcceso, String jefeId) {
+    public GrupoFamiliar(Long id, String nombre,
+                    String codigoAcceso, Long jefeId) {
         // el nombre debe ser válido
         validarNombre(nombre);
         this.id = id;
@@ -54,13 +54,13 @@ public class GrupoFamiliar {
         miembros.add(miembro);
     }
 
-    public String getId()               { return id; }
+    public Long getId()                 { return id; }
     public String getNombre()           { return nombre; }
     public String getCodigoAcceso()     { return codigoAcceso; }
-    public String getJefeId()           { return jefeId; }
+    public Long getJefeId()             { return jefeId; }
     public LocalDate getFechaCreacion() { return fechaCreacion; }
     public List<MiembroHogar> getMiembros() {
         return Collections.unmodifiableList(miembros);
     }
-    public void setId(String id)        { this.id = id; }
+    public void setId(Long id)          { this.id = id; }
 }

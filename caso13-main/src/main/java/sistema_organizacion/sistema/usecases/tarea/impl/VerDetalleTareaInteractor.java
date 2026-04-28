@@ -19,15 +19,15 @@ public class VerDetalleTareaInteractor implements VerDetalleTareaUseCase {
     }
 
     @Override
-    public Tarea ejecutar(String tareaId, String grupoId) {
+    public Tarea ejecutar(Long tareaId, Long grupoId) {
 
         // Verificar que el grupo existe
         grupoOutputPort.buscarPorId(grupoId)
-            .orElseThrow(() -> new GrupoFamiliarNoEncontradoException(grupoId));
+            .orElseThrow(() -> new GrupoFamiliarNoEncontradoException(grupoId.toString()));
 
         // CA-01-A HU-12: retorna la tarea con todos sus datos
         // CA-05-A HU-12: lanza excepción si no existe
         return tareaOutputPort.buscarPorId(tareaId)
-            .orElseThrow(() -> new TareaNoEncontradaException(tareaId));
+            .orElseThrow(() -> new TareaNoEncontradaException(tareaId.toString()));
     }
 }

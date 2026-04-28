@@ -1,6 +1,5 @@
 package sistema_organizacion.sistema.usecases.usuario.impl;
 
-import java.util.UUID;
 import sistema_organizacion.sistema.entities.JefeDeHogar;
 import sistema_organizacion.sistema.entities.MiembroHogar;
 import sistema_organizacion.sistema.entities.RolUsuario;
@@ -27,7 +26,6 @@ public class RegistrarUsuarioInteractor implements RegistrarUsuarioUseCase {
             throw new RolNoSeleccionadoException();
         }
 
-        String id = UUID.randomUUID().toString();
         Usuario nuevo;
 
         if (command.getRol() == RolUsuario.ADMIN) {
@@ -37,7 +35,7 @@ public class RegistrarUsuarioInteractor implements RegistrarUsuarioUseCase {
             }
             // Validaciones de correo y contraseña ocurren en el constructor
             nuevo = new JefeDeHogar(
-                id,
+                null,
                 command.getNombre(),
                 command.getApellido(),
                 command.getCorreo(),
@@ -46,7 +44,7 @@ public class RegistrarUsuarioInteractor implements RegistrarUsuarioUseCase {
             );
         } else {
             nuevo = new MiembroHogar(
-                id,
+                null,
                 command.getNombre(),
                 command.getApellido(),
                 command.getCorreo(),

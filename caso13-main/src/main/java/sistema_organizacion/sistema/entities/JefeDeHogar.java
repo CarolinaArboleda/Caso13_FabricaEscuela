@@ -6,10 +6,10 @@ import sistema_organizacion.sistema.entities.exception.NombreGrupoInvalidoExcept
 
 public class JefeDeHogar extends Usuario {
 
-    public JefeDeHogar(String id, String nombre, String apellido,
-                       String correo, String username, String contrasena) {
+    public JefeDeHogar(Long id, String nombre, String apellido,
+                        String correo, String username, String contrasena) {
         super(id, nombre, apellido, correo, username,
-              contrasena, RolUsuario.ADMIN);
+                contrasena, RolUsuario.ADMIN);
     }
 
     //  verificar si puede administrar

@@ -38,7 +38,7 @@ public class TareaController {
     @PostMapping
     public ResponseEntity<TareaResponse> crear(
             @RequestBody CrearTareaRequest request,
-            @RequestHeader("X-Usuario-Id") String jefeId) {
+            @RequestHeader("X-Usuario-Id") Long jefeId) {
 
         CrearTareaCommand command = new CrearTareaCommand(
             request.getTitulo(),
@@ -55,8 +55,8 @@ public class TareaController {
     // HU-13: modificar tarea
     @PutMapping("/{tareaId}")
     public ResponseEntity<ModificarTareaResponse> modificar(
-            @PathVariable String tareaId,
-            @RequestHeader("X-Usuario-Id") String jefeId,
+            @PathVariable Long tareaId,
+            @RequestHeader("X-Usuario-Id") Long jefeId,
             @RequestBody ModificarTareaRequest request) {
 
         ModificarTareaCommand command = new ModificarTareaCommand(
@@ -77,8 +77,8 @@ public class TareaController {
     // HU-12: ver detalle de la tarea
     @GetMapping("/{tareaId}")
     public ResponseEntity<TareaResponse> verDetalle(
-            @PathVariable String tareaId,
-            @RequestParam String grupoId) {
+            @PathVariable Long tareaId,
+            @RequestParam Long grupoId) {
 
         Tarea tarea = verDetalleTareaUseCase.ejecutar(tareaId, grupoId);
         return ResponseEntity.ok(presenter.toResponse(tarea));

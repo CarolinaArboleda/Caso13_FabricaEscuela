@@ -6,7 +6,7 @@ public class CrearTareaRequest {
     private String titulo;
     private String descripcion;
     private LocalDate fechaLimite;
-    private String grupoId;
+    private Long grupoId;
 
     public String getTitulo()             { return titulo; }
     public void setTitulo(String t)       { this.titulo = t; }
@@ -14,6 +14,6 @@ public class CrearTareaRequest {
     public void setDescripcion(String d)  { this.descripcion = d; }
     public LocalDate getFechaLimite()     { return fechaLimite; }
     public void setFechaLimite(LocalDate f) { this.fechaLimite = f; }
-    public String getGrupoId()            { return grupoId; }
-    public void setGrupoId(String g)      { this.grupoId = g; }
+    public Long getGrupoId()              { return grupoId; }
+    public void setGrupoId(Long g)        { this.grupoId = g; }
 }

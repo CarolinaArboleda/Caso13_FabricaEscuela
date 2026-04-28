@@ -5,12 +5,12 @@ public class CrearTareaCommand {
     private final String titulo;
     private final String descripcion;
     private final LocalDate fechaLimite;
-    private final String grupoId;
-    private final String jefeId;
+    private final Long grupoId;
+    private final Long jefeId;
 
     public CrearTareaCommand(String titulo, String descripcion,
                               LocalDate fechaLimite,
-                              String grupoId, String jefeId) {
+                              Long grupoId, Long jefeId) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.fechaLimite = fechaLimite;
@@ -21,6 +21,6 @@ public class CrearTareaCommand {
     public String getTitulo()         { return titulo; }
     public String getDescripcion()    { return descripcion; }
     public LocalDate getFechaLimite() { return fechaLimite; }
-    public String getGrupoId()        { return grupoId; }
-    public String getJefeId()         { return jefeId; }
+    public Long getGrupoId()          { return grupoId; }
+    public Long getJefeId()           { return jefeId; }
 }

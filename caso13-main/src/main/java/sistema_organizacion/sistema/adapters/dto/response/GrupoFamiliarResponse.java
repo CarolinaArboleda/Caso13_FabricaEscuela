@@ -1,13 +1,13 @@
 package sistema_organizacion.sistema.adapters.dto.response;
 
 public class GrupoFamiliarResponse {
-    private String id;
+    private Long id;
     private String nombre;
     private String codigoAcceso;    // CA-03-B HU-02: se muestra al crear
     private String fechaCreacion;
 
-    public String getId()               { return id; }
-    public void setId(String id)        { this.id = id; }
+    public Long getId()                 { return id; }
+    public void setId(Long id)          { this.id = id; }
     public String getNombre()           { return nombre; }
     public void setNombre(String n)     { this.nombre = n; }
     public String getCodigoAcceso()     { return codigoAcceso; }

@@ -37,7 +37,7 @@ public class GrupoFamiliarController {
     @PostMapping
     public ResponseEntity<GrupoFamiliarResponse> crear(
             @RequestBody CrearGrupoRequest request,
-            @RequestHeader("X-Usuario-Id") String jefeId) {
+            @RequestHeader("X-Usuario-Id") Long jefeId) {
 
         CrearGrupoCommand command = new CrearGrupoCommand(
             request.getNombre(), jefeId
@@ -49,7 +49,7 @@ public class GrupoFamiliarController {
 
     @PostMapping("/ingresar")
     public ResponseEntity<GrupoFamiliarResponse> ingresar(
-            @RequestHeader("X-Usuario-Id") String miembroId,
+            @RequestHeader("X-Usuario-Id") Long miembroId,
             @RequestBody IngresarGrupoRequest request) {
 
         IngresarGrupoCommand command = new IngresarGrupoCommand(

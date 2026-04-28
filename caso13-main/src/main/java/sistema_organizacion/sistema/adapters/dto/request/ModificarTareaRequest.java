@@ -1,14 +1,14 @@
 package sistema_organizacion.sistema.adapters.dto.request;
 
 public class ModificarTareaRequest {
-    private String idTarea;
+    private Long idTarea;
     private String titulo;
     private String descripcion;
     private String estado;
     private String fechaLimite;
 
-    public String getIdTarea()                { return idTarea; }
-    public void setIdTarea(String idTarea)    { this.idTarea = idTarea; }
+    public Long getIdTarea()                  { return idTarea; }
+    public void setIdTarea(Long idTarea)      { this.idTarea = idTarea; }
 
     public String getTitulo()                 { return titulo; }
     public void setTitulo(String titulo)      { this.titulo = titulo; }
