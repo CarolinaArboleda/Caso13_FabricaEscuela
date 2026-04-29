@@ -75,10 +75,15 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-    		<groupId>org.mapstruct</groupId>
+    	    <groupId>org.mapstruct</groupId>
     		<artifactId>mapstruct</artifactId>
     		<version>1.5.5.Final</version>
-		</dependency>		
+		</dependency>
+		<dependency>
+            <groupId>me.paulschwarz</groupId>
+            <artifactId>spring-dotenv</artifactId>
+            <version>4.0.0</version>
+</dependency>
 	</dependencies>
 
 	<build>
