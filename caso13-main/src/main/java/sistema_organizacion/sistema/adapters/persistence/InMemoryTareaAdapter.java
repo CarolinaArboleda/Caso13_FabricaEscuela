@@ -40,7 +40,6 @@ public class InMemoryTareaAdapter implements TareaOutputPort {
 
     @Override
     public Estado buscarEstadoPorNombre(EstadoTarea nombreEstado) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buscarEstadoPorNombre'");
-    }
+        return null;
+}
 }

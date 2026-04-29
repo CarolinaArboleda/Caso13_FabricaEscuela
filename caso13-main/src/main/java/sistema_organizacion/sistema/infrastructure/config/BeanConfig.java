@@ -2,6 +2,8 @@ package sistema_organizacion.sistema.infrastructure.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import sistema_organizacion.sistema.ports.outs.DetalleTareaOutputPort;
 import sistema_organizacion.sistema.ports.outs.GrupoFamiliarOutputPort;
 import sistema_organizacion.sistema.ports.outs.TareaOutputPort;
 import sistema_organizacion.sistema.ports.outs.UsuarioOutputPort;
@@ -17,6 +19,7 @@ import sistema_organizacion.sistema.usecases.tarea.impl.ModificarTareaInteractor
 import sistema_organizacion.sistema.usecases.tarea.impl.VerDetalleTareaInteractor;
 import sistema_organizacion.sistema.usecases.usuario.IniciarSesionUseCase;
 import sistema_organizacion.sistema.usecases.usuario.RegistrarUsuarioUseCase;
+import sistema_organizacion.sistema.usecases.usuario.impl.CrearDetalleTareaInteractor;
 import sistema_organizacion.sistema.usecases.usuario.impl.IniciarSesionInteractor;
 import sistema_organizacion.sistema.usecases.usuario.impl.RegistrarUsuarioInteractor;
 
@@ -77,5 +80,13 @@ public class BeanConfig {
             TareaOutputPort tareaOutputPort) {
         return new ModificarTareaInteractor(
             usuarioOutputPort, tareaOutputPort);
+    }
+
+    @Bean
+    public CrearDetalleTareaInteractor crearDetalleTareaInteractor(
+            DetalleTareaOutputPort detalleTareaOutputPort,
+            TareaOutputPort tareaOutputPort) {
+        return new CrearDetalleTareaInteractor(
+            detalleTareaOutputPort, tareaOutputPort);
     }
 }

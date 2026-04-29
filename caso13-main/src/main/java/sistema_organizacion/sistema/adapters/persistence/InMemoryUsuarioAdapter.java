@@ -59,7 +59,6 @@ public class InMemoryUsuarioAdapter implements UsuarioOutputPort {
 
     @Override
     public Rol buscarRolPorNombre(RolUsuario nombreRol) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buscarRolPorNombre'");
-    }
+        return null; // no implementado en memoria
+}
 }

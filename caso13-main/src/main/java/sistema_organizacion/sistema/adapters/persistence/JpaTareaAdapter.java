@@ -26,11 +26,13 @@ public class JpaTareaAdapter implements TareaOutputPort {
     }
 
     @Override
+    @SuppressWarnings("null")
     public Tarea guardar(Tarea tarea) {
         return tareaRepository.save(tarea);
     }
 
     @Override
+    @SuppressWarnings("null")
     public Optional<Tarea> buscarPorId(Long id) {
         return tareaRepository.findById(id);
     }

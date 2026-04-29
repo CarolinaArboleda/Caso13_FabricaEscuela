@@ -14,7 +14,6 @@ import sistema_organizacion.sistema.ports.outs.TareaOutputPort;
 import sistema_organizacion.sistema.ports.outs.UsuarioOutputPort;
 import sistema_organizacion.sistema.usecases.tarea.CrearTareaCommand;
 import sistema_organizacion.sistema.usecases.tarea.CrearTareaUseCase;
-import java.time.LocalDate;
 
 public class CrearTareaInteractor implements CrearTareaUseCase {
 
